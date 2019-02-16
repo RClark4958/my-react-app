@@ -27,8 +27,28 @@ const Tacos = ({ routes }) => (
   </div>
 );
 
-const Bus = () => <h3>Bus</h3>;
+const Bus = ({ routes }) => (
+  <div>
+    
+  <h2>Bus</h2>
+  <ul>
+    <li>
+      <Link to="/tacos/bus/seat">Seat</Link>
+    </li>
+    <li>
+      <Link to="/tacos/bus/wheel">Wheel</Link>
+    </li>
+  </ul>
+
+  {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+  </div>
+);
+
 const Cart = () => <h3>Cart</h3>;
+
+const Seat = () => <h3>Seat</h3>;
+
+const Wheel = () => <h3>Wheel</h3>;
 
 ////////////////////////////////////////////////////////////
 // then our route config
@@ -43,8 +63,19 @@ const routes = [
     routes: [
       {
         path: "/tacos/bus",
-        component: Bus
+        component: Bus,
+         routes: [
+           {
+             path:"/tacos/bus/seat",
+             component: Seat
+           },
+           {
+             path:"/tacos/bus/wheel",
+             component: Wheel
+           }
+         ]
       },
+
       {
         path: "/tacos/cart",
         component: Cart
