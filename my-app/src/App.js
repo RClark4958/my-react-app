@@ -9,34 +9,34 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 // first our route components
 const Main = () => <h2>Main</h2>;
 
-const Sandwiches = () => <h2>Sandwiches</h2>;
+const DPS = () => <h2>DPS</h2>;
 
-const Tacos = ({ routes }) => (
-  <div>
-    <h2>Tacos</h2>
-    <ul>
-      <li>
-        <Link to="/tacos/bus">Bus</Link>
-      </li>
-      <li>
-        <Link to="/tacos/cart">Cart</Link>
-      </li>
-    </ul>
+// const RPG = ({ routes }) => (
+//   <div>
+//     <h2>RPG</h2>
+//     <ul>
+//       <li>
+//         <Link to="/rpg/healer">Healer</Link>
+//       </li>
+//       <li>
+//         <Link to="/rpg/dps">DPS</Link>
+//       </li>
+//     </ul>
 
-    {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-  </div>
-);
+//     {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+//   </div>
+// );
 
-const Bus = ({ routes }) => (
+const Healer = ({ routes }) => (
   <div>
     
-  <h2>Bus</h2>
+  <h2>Healer Type</h2>
   <ul>
     <li>
-      <Link to="/tacos/bus/seat">Seat</Link>
+      <Link to="/healer/divine">Divine</Link>
     </li>
     <li>
-      <Link to="/tacos/bus/wheel">Wheel</Link>
+      <Link to="/healer/magical">Magical</Link>
     </li>
   </ul>
 
@@ -44,41 +44,42 @@ const Bus = ({ routes }) => (
   </div>
 );
 
-const Cart = () => <h3>Cart</h3>;
+// const DPS = () => <h3>DPS</h3>;
 
-const Seat = () => <h3>Seat</h3>;
+const Divine = () => <h3>Divine</h3>;
 
-const Wheel = () => <h3>Wheel</h3>;
+const Magical = () => <h3>Magical</h3>;
 
 ////////////////////////////////////////////////////////////
 // then our route config
 const routes = [
   {
-    path: "/sandwiches",
-    component: Sandwiches
+    path: "/dps",
+    component: DPS
   },
   {
-    path: "/tacos",
-    component: Tacos,
+    path: "/healer",
+    component: Healer,
     routes: [
       {
-        path: "/tacos/bus",
-        component: Bus,
-         routes: [
-           {
-             path:"/tacos/bus/seat",
-             component: Seat
-           },
-           {
-             path:"/tacos/bus/wheel",
-             component: Wheel
-           }
-         ]
+        path: "/healer/divine/",
+        component: Divine
       },
+      //    routes: [
+      //      {
+      //        path:"/tacos/bus/seat",
+      //        component: Seat
+      //      },
+      //      {
+      //        path:"/tacos/bus/wheel",
+      //        component: Wheel
+      //      }
+      //    ]
+      // },
 
       {
-        path: "/tacos/cart",
-        component: Cart
+        path: "/healer/magical",
+        component: Magical
       }
     ]
   }
@@ -101,10 +102,10 @@ const RouteConfigExample = () => (
     <div>
       <ul>
         <li>
-          <Link to="/tacos">Tacos</Link>
+          <Link to="/dps">DPS</Link>
         </li>
         <li>
-          <Link to="/sandwiches">Sandwiches</Link>
+          <Link to="/healer">Healer</Link>
         </li>
       </ul>
 
