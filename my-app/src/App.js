@@ -1,70 +1,85 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-const BasicExample = () => (
+// Some folks find value in a centralized route config.
+// A route config is just data. React is great at mapping
+// data into components, and <Route> is a component.
+
+////////////////////////////////////////////////////////////
+// first our route components
+const Main = () => <h2>Main</h2>;
+
+const Sandwiches = () => <h2>Sandwiches</h2>;
+
+const Tacos = ({ routes }) => (
+  <div>
+    <h2>Tacos</h2>
+    <ul>
+      <li>
+        <Link to="/tacos/bus">Bus</Link>
+      </li>
+      <li>
+        <Link to="/tacos/cart">Cart</Link>
+      </li>
+    </ul>
+
+    {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+  </div>
+);
+
+const Bus = () => <h3>Bus</h3>;
+const Cart = () => <h3>Cart</h3>;
+
+////////////////////////////////////////////////////////////
+// then our route config
+const routes = [
+  {
+    path: "/sandwiches",
+    component: Sandwiches
+  },
+  {
+    path: "/tacos",
+    component: Tacos,
+    routes: [
+      {
+        path: "/tacos/bus",
+        component: Bus
+      },
+      {
+        path: "/tacos/cart",
+        component: Cart
+      }
+    ]
+  }
+];
+
+// wrap <Route> and use this everywhere instead, then when
+// sub routes are added to any route it'll work
+const RouteWithSubRoutes = route => (
+  <Route
+    path={route.path}
+    render={props => (
+      // pass the sub-routes down to keep nesting
+      <route.component {...props} routes={route.routes} />
+    )}
+  />
+);
+
+const RouteConfigExample = () => (
   <Router>
     <div>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/tacos">Tacos</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/topics">Topics</Link>
+          <Link to="/sandwiches">Sandwiches</Link>
         </li>
       </ul>
 
-      <hr />
-
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
+      {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
     </div>
   </Router>
 );
 
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-);
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-);
-
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>Rendering with React</Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>Components</Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic} />
-    <Route
-      exact
-      path={match.url}
-      render={() => <h3>Please select a topic.</h3>}
-    />
-  </div>
-);
-
-const Topic = ({ match }) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-);
-
-export default BasicExample;
+export default RouteConfigExample;
