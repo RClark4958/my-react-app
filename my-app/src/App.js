@@ -56,12 +56,17 @@ const Divine = ({ routes }) => (
       <li>
         <Link to="/healer/divine/apothecary">Apothecary</Link>
       </li>
+      <li>
+        <Link to="/healer/divine/Shaman">Shaman</Link>
+      </li>
     </ul>
 
   {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
   </div>
 );
 
+
+const Shaman = () => <div><h3>Shaman</h3><img src="https://gamepedia.cursecdn.com/wowpedia/thumb/2/21/Grennan_Stormspeaker_TCG.jpg/300px-Grennan_Stormspeaker_TCG.jpg?version=b866f641273adf82a0dddb9115ac6815"></img> </div>
 
 const Priest = () => <div><h3>Priest</h3><img src="https://cdn3.vectorstock.com/i/1000x1000/38/02/priest-female-warrior-fantasy-medieval-action-rpg-vector-22363802.jpg" height="200px" alt="female"></img></div>;
 
@@ -91,6 +96,10 @@ const routes = [
            {
              path:"/healer/divine/apothecary",
              component: Apothecary
+           },
+           {
+             path:"/healer/divine/shaman",
+             component: Shaman
            }
          ]
       },
